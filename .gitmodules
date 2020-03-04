@@ -1,0 +1,3 @@
+[submodule "upstream/cert-manager"]
+	path = upstream/cert-manager
+	url = https://github.com/jetstack/cert-manager

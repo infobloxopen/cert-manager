@@ -1,0 +1,5 @@
+respositories:
+- name: cert-manager
+  repo: https://github.com/jetstack/cert-manager
+  tag: v0.13.1
+  path: deploy/charts/cert-manager
