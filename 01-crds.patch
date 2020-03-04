@@ -1,0 +1,106 @@
+diff --git a/stable/cert-manager/Chart.yaml b/stable/cert-manager/Chart.yaml
+index 877acaad8..e934e4718 100644
+--- a/stable/cert-manager/Chart.yaml
++++ b/stable/cert-manager/Chart.yaml
+@@ -12,7 +12,7 @@ keywords:
+   - letsencrypt
+   - tls
+ sources:
+-  - https://github.com/jetstack/cert-manager
++  - https://github.com/infobloxopen/cert-manager
+ maintainers:
+-  - name: munnerz
+-    email: james@jetstack.io
++  - name: drewwells
++    email: dwells@infoblox.com
+diff --git a/stable/cert-manager/crds/certificaterequests.yaml b/stable/cert-manager/crds/certificaterequests.yaml
+index d7bfd7c2c..9d132ef9e 100644
+--- a/stable/cert-manager/crds/certificaterequests.yaml
++++ b/stable/cert-manager/crds/certificaterequests.yaml
+@@ -2,6 +2,8 @@ apiVersion: apiextensions.k8s.io/v1beta1
+ kind: CustomResourceDefinition
+ metadata:
+   name: certificaterequests.cert-manager.io
++  annotations:
++    helm.sh/hook: crd-install
+ spec:
+   additionalPrinterColumns:
+   - JSONPath: .status.conditions[?(@.type=="Ready")].status
+diff --git a/stable/cert-manager/crds/challenges.yaml b/stable/cert-manager/crds/challenges.yaml
+index 740b9aed2..280cd635a 100644
+--- a/stable/cert-manager/crds/challenges.yaml
++++ b/stable/cert-manager/crds/challenges.yaml
+@@ -2,6 +2,8 @@ apiVersion: apiextensions.k8s.io/v1beta1
+ kind: CustomResourceDefinition
+ metadata:
+   name: challenges.acme.cert-manager.io
++  annotations:
++    helm.sh/hook: crd-install
+ spec:
+   additionalPrinterColumns:
+   - JSONPath: .status.state
+diff --git a/stable/cert-manager/crds/clusterissuers.yaml b/stable/cert-manager/crds/clusterissuers.yaml
+index 2cb62affc..54f08dc93 100644
+--- a/stable/cert-manager/crds/clusterissuers.yaml
++++ b/stable/cert-manager/crds/clusterissuers.yaml
+@@ -2,6 +2,8 @@ apiVersion: apiextensions.k8s.io/v1beta1
+ kind: CustomResourceDefinition
+ metadata:
+   name: clusterissuers.cert-manager.io
++  annotations:
++    helm.sh/hook: crd-install
+ spec:
+   additionalPrinterColumns:
+   - JSONPath: .status.conditions[?(@.type=="Ready")].status
+diff --git a/stable/cert-manager/crds/issuers.yaml b/stable/cert-manager/crds/issuers.yaml
+index cdf9ae83f..cec137c5f 100644
+--- a/stable/cert-manager/crds/issuers.yaml
++++ b/stable/cert-manager/crds/issuers.yaml
+@@ -2,6 +2,8 @@ apiVersion: apiextensions.k8s.io/v1beta1
+ kind: CustomResourceDefinition
+ metadata:
+   name: issuers.cert-manager.io
++  annotations:
++    helm.sh/hook: crd-install
+ spec:
+   additionalPrinterColumns:
+   - JSONPath: .status.conditions[?(@.type=="Ready")].status
+diff --git a/stable/cert-manager/crds/orders.yaml b/stable/cert-manager/crds/orders.yaml
+index 8f94e6e2b..b129898ca 100644
+--- a/stable/cert-manager/crds/orders.yaml
++++ b/stable/cert-manager/crds/orders.yaml
+@@ -2,6 +2,8 @@ apiVersion: apiextensions.k8s.io/v1beta1
+ kind: CustomResourceDefinition
+ metadata:
+   name: orders.acme.cert-manager.io
++  annotations:
++    helm.sh/hook: crd-install
+ spec:
+   additionalPrinterColumns:
+   - JSONPath: .status.state
+diff --git a/stable/cert-manager/templates/crds.yaml b/stable/cert-manager/templates/crds.yaml
+new file mode 100644
+index 000000000..3b3bf16d5
+--- /dev/null
++++ b/stable/cert-manager/templates/crds.yaml
+@@ -0,0 +1,6 @@
++{{- if .Values.crds.create }}
++{{- range $path, $bytes := .Files.Glob "crds/*.yaml" }}
++{{ $.Files.Get $path }}
++---
++{{- end }}
++{{- end }}
+diff --git a/stable/cert-manager/values.yaml b/stable/cert-manager/values.yaml
+index 4bd88b95c..ee6b5307e 100644
+--- a/stable/cert-manager/values.yaml
++++ b/stable/cert-manager/values.yaml
+@@ -66,6 +66,9 @@ extraEnv: []
+ # - name: SOME_VAR
+ #   value: 'some value'
+ 
++crds:
++  create: true
++
+ resources: {}
+   # requests:
+   #   cpu: 10m
