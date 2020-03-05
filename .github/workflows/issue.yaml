@@ -49,12 +49,7 @@ jobs:
       run: |
         echo "$GITHUB_CONTEXT" | jq '.event.issue.title'
         VERSION=$(echo "$GITHUB_CONTEXT" | jq '.event.issue.title')
+        TICKET=$(echo "$GITHUB_CONTEXT" | jq '.event.issue.number')
         echo Version: $VERSION
         make VERSION=${VERSION} SHELL='bash -x' sync
-        make VERSION=${VERSION} SHELL='bash -x' update-index
-    - name: Close issue
-      uses: roots/issue-closer@v1.1
-      with:
-        repo-token: ${{ secrets.GITHUB_TOKEN }}
-        issue-close-message: "@${issue.user.login} the release was successfully created"
-        issue-pattern: "^v*$"
+        make TICKET=${TICKET} VERSION=${VERSION} SHELL='bash -x' update-index

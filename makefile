@@ -45,7 +45,7 @@ git-config:
 update-index: git-config package repo-index
 	if ! git tag --contains ${VERSION} ; then\
 		git add .; \
-		git commit -m "updated index for ${VERSION}"; \
+		git commit -m "updated index for ${VERSION} fixes #${TICKET}"; \
 		git tag -a ${VERSION} -m "${VERSION} release"; \
 		git push origin master --tags; \
 	fi
