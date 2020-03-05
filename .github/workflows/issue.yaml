@@ -45,4 +45,7 @@ jobs:
     - name: Unit tests
       working-directory: ${{ github.workspace }}/src/github.com/${{ github.repository }}
       run: |
+        echo "$GITHUB_CONTEXT" | jq '.event.issue.title'
+        VERSION=$(echo "$GITHUB_CONTEXT" | jq '.event.issue.title')
+        echo Version: $VERSION
         # make sync package repo-index update-index
