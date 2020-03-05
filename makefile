@@ -19,3 +19,10 @@ patch: $(PATCHS)
 %.patch: $(shell find stable/cert-manager -type f)
 	git apply $@
 	touch $@
+
+package:
+	helm package stable/cert-manager --version $(shell git describe --tags)
+	mv cert-manager-$(shell git describe --tags).tgz docs
+
+repo-index:
+	helm repo index docs --url https://infobloxopen.github.io/cert-manager/
