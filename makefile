@@ -1,5 +1,7 @@
+VERSION ?= $(shell git describe --tags)
+
 sync:
-	cd upstream/cert-manager &&	git checkout v0.13.1
+	cd upstream/cert-manager &&	git checkout ${VERSION}
 	cp -vr upstream/cert-manager/deploy/charts/cert-manager/ stable/cert-manager/
 
 submodule-update:
@@ -21,8 +23,12 @@ patch: $(PATCHS)
 	touch $@
 
 package:
-	helm package stable/cert-manager --version $(shell git describe --tags)
-	mv cert-manager-$(shell git describe --tags).tgz docs
+	helm package stable/cert-manager --version ${VERSION}
+	mv -v cert-manager-${VERSION}.tgz docs
 
 repo-index:
 	helm repo index docs --url https://infobloxopen.github.io/cert-manager/
+
+update-index:
+	git commit -am "updated index for ${VERSION}"
+	git push origin master
