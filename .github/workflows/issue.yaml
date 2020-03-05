@@ -50,14 +50,11 @@ jobs:
         echo "$GITHUB_CONTEXT" | jq '.event.issue.title'
         VERSION=$(echo "$GITHUB_CONTEXT" | jq '.event.issue.title')
         echo Version: $VERSION
-        make VERSION=${VERSION} sync SHELL='bash -x'
-        make VERSION=${VERSION} update-index SHELL='bash -x'
-  autoclose:
-    runs-on: ubuntu-latest
-    steps:
-    - name: Autoclose issues when the release is created
+        make VERSION=${VERSION} SHELL='bash -x' sync
+        make VERSION=${VERSION} SHELL='bash -x' update-index
+    - name: Close issue
       uses: roots/issue-closer@v1.1
       with:
         repo-token: ${{ secrets.GITHUB_TOKEN }}
         issue-close-message: "@${issue.user.login} the release was successfully created"
-        issue-pattern: ".*guidelines for Contributing.*"
+        issue-pattern: "^v*$"
