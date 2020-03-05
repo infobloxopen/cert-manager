@@ -3,7 +3,7 @@ on:
   issues:
     types: [opened, edited, milestoned]
   issue_comment:
-    types: [created, deleted]
+    types: [created, edited, deleted]
 jobs:
   build:
     env:
@@ -44,5 +44,11 @@ jobs:
 
     - name: Unit tests
       working-directory: ${{ github.workspace }}/src/github.com/${{ github.repository }}
+      env:
+          GITHUB_CONTEXT: ${{ toJson(github) }}
       run: |
-        # make sync package repo-index update-index
+        echo "$GITHUB_CONTEXT" | jq '.event.issue.title'
+        VERSION=$(echo "$GITHUB_CONTEXT" | jq '.event.issue.title')
+        echo Version: $VERSION
+        make VERSION=${VERSION} sync SHELL='bash -x'
+        make VERSION=${VERSION} update-index SHELL='bash -x'
