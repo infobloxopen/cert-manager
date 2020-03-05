@@ -42,7 +42,7 @@ jobs:
         path: src/github.com/${{ github.repository }}
         # fetch-depth: 100 # support git describe --always
 
-    - name: Unit tests
+    - name: Create release
       working-directory: ${{ github.workspace }}/src/github.com/${{ github.repository }}
       env:
           GITHUB_CONTEXT: ${{ toJson(github) }}
@@ -52,3 +52,12 @@ jobs:
         echo Version: $VERSION
         make VERSION=${VERSION} sync SHELL='bash -x'
         make VERSION=${VERSION} update-index SHELL='bash -x'
+  autoclose:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Autoclose issues when the release is created
+      uses: roots/issue-closer@v1.1
+      with:
+        repo-token: ${{ secrets.GITHUB_TOKEN }}
+        issue-close-message: "@${issue.user.login} the release was successfully created"
+        issue-pattern: ".*guidelines for Contributing.*"
