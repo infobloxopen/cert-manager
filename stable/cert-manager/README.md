@@ -13,22 +13,15 @@ to renew certificates at an appropriate time before expiry.
 ## Installing the Chart
 
 Full installation instructions, including details on how to configure extra
-functionality in cert-manager can be found in the [getting started docs](https://docs.cert-manager.io/en/latest/getting-started/).
+functionality in cert-manager can be found in the ~[getting started docs](https://docs.cert-manager.io/en/latest/getting-started/).~
+
+This forked version is much easier to install.
 
 To install the chart with the release name `my-release`:
 
 ```console
-## IMPORTANT: you MUST install the cert-manager CRDs **before** installing the
-## cert-manager Helm chart
-$ kubectl apply --validate=false \
-    -f https://raw.githubusercontent.com/jetstack/cert-manager/release-0.13/deploy/manifests/00-crds.yaml
-
-## If you are installing on openshift :
-$ oc create \
-    -f https://raw.githubusercontent.com/jetstack/cert-manager/release-0.13/deploy/manifests/00-crds.yaml
-
 ## Add the Jetstack Helm repository
-$ helm repo add jetstack https://charts.jetstack.io
+$ helm repo add infobloxopen https://charts.jetstack.io
 
 
 ## Install the cert-manager helm chart
