@@ -10,13 +10,14 @@ submodule-update:
 submodule:
 	git submodule add --name upstream/cert-manager https://github.com/jetstack/cert-manager
 
-PATCHS := 01-crds.patch
+PATCHES := $(sort $(wildcard *.patch))
+
 
 makepatch:
 	git add -A stable/cert-manager
-	git diff --cached > 01-crds.patch
+	git diff --cached > next.patch
 
-patch: $(PATCHS)
+patch: $(PATCHES)
 
 %.patch: $(shell find stable/cert-manager -type f)
 	git apply $@
