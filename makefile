@@ -28,7 +28,7 @@ ${HOME}/.helm/repository/local:
 helm-init: ${HOME}/.helm/repository/local
 
 package: helm-init
-	helm package stable/cert-manager --version ${VERSION}
+	helm package stable/cert-manager --version ${VERSION} --app-version ${VERSION}
 	mv -v cert-manager-${VERSION}.tgz docs
 
 repo-index:
