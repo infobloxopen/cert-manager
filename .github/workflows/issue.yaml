@@ -48,7 +48,7 @@ jobs:
           GITHUB_CONTEXT: ${{ toJson(github) }}
       run: |
         echo "$GITHUB_CONTEXT" | jq '.event.issue.title'
-        ACTOR=$(echo "$GITHUB_CONTEXT" | jq '.actor')
+        ACTOR=$(echo "$GITHUB_CONTEXT" | jq -r '.actor')
         [[ "$ACTOR" -eq drewwells ]] || { echo >&2 "actor does not have access to publish indexes"; exit 1; }
         VERSION=$(echo "$GITHUB_CONTEXT" | jq '.event.issue.title')
         TICKET=$(echo "$GITHUB_CONTEXT" | jq '.event.issue.number')
