@@ -1,0 +1,39 @@
+diff --git a/stable/cert-manager/README.md b/stable/cert-manager/README.md
+index 872b183..3963c80 100644
+--- a/stable/cert-manager/README.md
++++ b/stable/cert-manager/README.md
+@@ -15,7 +15,7 @@ to renew certificates at an appropriate time before expiry.
+ Full installation instructions, including details on how to configure extra
+ functionality in cert-manager can be found in the ~[getting started docs](https://docs.cert-manager.io/en/latest/getting-started/).~
+ 
+-This forked version is much easier to install.
++This forked version is designed to be installed much easier.
+ 
+ To install the chart with the release name `my-release`:
+ 
+@@ -23,9 +23,8 @@ To install the chart with the release name `my-release`:
+ ## Add the Jetstack Helm repository
+ $ helm repo add infobloxopen https://charts.jetstack.io
+ 
+-
+ ## Install the cert-manager helm chart
+-$ helm install --name my-release --namespace cert-manager jetstack/cert-manager
++$ helm upgrade --install --name my-release --namespace cert-manager infobloxopen/cert-manager
+ ```
+ 
+ In order to begin issuing certificates, you will need to set up a ClusterIssuer
+@@ -55,7 +54,7 @@ Please check here before perform upgrades!
+ To uninstall/delete the `my-release` deployment:
+ 
+ ```console
+-$ helm delete my-release
++$ helm delete --purge my-release
+ ```
+ 
+ The command removes all the Kubernetes components associated with the chart and deletes the release.
+@@ -149,4 +148,4 @@ $ helm install --name my-release -f values.yaml .
+ 
+ ## Contributing
+ 
+-This chart is maintained at [github.com/jetstack/cert-manager](https://github.com/jetstack/cert-manager/tree/master/deploy/charts/cert-manager).
++This chart is maintained at [github.com/infobloxopen/cert-manager](https://github.com/infobloxopen/cert-manager/tree/master/deploy/charts/cert-manager).
