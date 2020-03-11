@@ -12,7 +12,7 @@ keywords:
   - letsencrypt
   - tls
 sources:
-  - https://github.com/jetstack/cert-manager
+  - https://github.com/infobloxopen/cert-manager
 maintainers:
-  - name: munnerz
-    email: james@jetstack.io
+  - name: drewwells
+    email: dwells@infoblox.com
