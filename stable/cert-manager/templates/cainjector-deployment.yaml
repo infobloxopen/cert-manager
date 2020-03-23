@@ -21,7 +21,6 @@ spec:
       app: {{ include "cainjector.name" . }}
       app.kubernetes.io/name: {{ include "cainjector.name" . }}
       app.kubernetes.io/instance: {{ .Release.Name }}
-      app.kubernetes.io/managed-by: {{ .Release.Service }}
   {{- with .Values.cainjector.strategy }}
   strategy:
     {{- . | toYaml | nindent 4 }}
