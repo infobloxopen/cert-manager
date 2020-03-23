@@ -3,7 +3,7 @@ entries:
   cert-manager:
   - apiVersion: v1
     appVersion: v0.13.1
-    created: "2020-03-11T07:57:04.883131984-05:00"
+    created: "2020-03-23T14:51:44.749562366-05:00"
     description: A Helm chart for cert-manager
     digest: a1b79e12752648e1bbfe2ea5d7ca430b172ef10936c867a696e5bfc378af1b3c
     home: https://github.com/jetstack/cert-manager
@@ -23,8 +23,29 @@ entries:
     - https://infobloxopen.github.io/cert-manager/cert-manager-v0.13.1.tgz
     version: v0.13.1
   - apiVersion: v1
+    appVersion: v0.13.1-2-g2aa9a9f
+    created: "2020-03-23T14:51:44.746217785-05:00"
+    description: A Helm chart for cert-manager
+    digest: 1f51551e9829824d56612f3667fd979309d9a56882a91bd776856186dbb736a8
+    home: https://github.com/jetstack/cert-manager
+    icon: https://raw.githubusercontent.com/jetstack/cert-manager/master/logo/logo.png
+    keywords:
+    - cert-manager
+    - kube-lego
+    - letsencrypt
+    - tls
+    maintainers:
+    - email: dwells@infoblox.com
+      name: drewwells
+    name: cert-manager
+    sources:
+    - https://github.com/infobloxopen/cert-manager
+    urls:
+    - https://infobloxopen.github.io/cert-manager/cert-manager-v0.13.1-2-g2aa9a9f.tgz
+    version: v0.13.1-2-g2aa9a9f
+  - apiVersion: v1
     appVersion: v0.9.1
-    created: "2020-03-11T07:57:04.889260082-05:00"
+    created: "2020-03-23T14:51:44.752677083-05:00"
     description: A Helm chart for cert-manager
     digest: e5eda62b7a704fe0a58d80b0f473cbf76a5318e9f02d74afe42fe214f9898106
     home: https://github.com/jetstack/cert-manager
@@ -43,4 +64,4 @@ entries:
     urls:
     - https://infobloxopen.github.io/cert-manager/cert-manager-v0.9.1.tgz
     version: v0.9.1
-generated: "2020-03-11T07:57:04.881022457-05:00"
+generated: "2020-03-23T14:51:44.74337878-05:00"
