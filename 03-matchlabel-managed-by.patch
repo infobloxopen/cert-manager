@@ -1,0 +1,46 @@
+diff --git a/stable/cert-manager/templates/cainjector-deployment.yaml b/stable/cert-manager/templates/cainjector-deployment.yaml
+index 615fd05..09f166b 100644
+--- a/stable/cert-manager/templates/cainjector-deployment.yaml
++++ b/stable/cert-manager/templates/cainjector-deployment.yaml
+@@ -21,7 +21,6 @@ spec:
+       app: {{ include "cainjector.name" . }}
+       app.kubernetes.io/name: {{ include "cainjector.name" . }}
+       app.kubernetes.io/instance: {{ .Release.Name }}
+-      app.kubernetes.io/managed-by: {{ .Release.Service }}
+   {{- with .Values.cainjector.strategy }}
+   strategy:
+     {{- . | toYaml | nindent 4 }}
+diff --git a/stable/cert-manager/templates/deployment.yaml b/stable/cert-manager/templates/deployment.yaml
+index b6a3277..cbc853f 100644
+--- a/stable/cert-manager/templates/deployment.yaml
++++ b/stable/cert-manager/templates/deployment.yaml
+@@ -20,7 +20,6 @@ spec:
+       app: {{ template "cert-manager.name" . }}
+       app.kubernetes.io/name: {{ template "cert-manager.name" . }}
+       app.kubernetes.io/instance: {{ .Release.Name }}
+-      app.kubernetes.io/managed-by: {{ .Release.Service }}
+   {{- with .Values.strategy }}
+   strategy:
+     {{- . | toYaml | nindent 4 }}
+diff --git a/stable/cert-manager/templates/webhook-deployment.yaml b/stable/cert-manager/templates/webhook-deployment.yaml
+index f904809..8c94108 100644
+--- a/stable/cert-manager/templates/webhook-deployment.yaml
++++ b/stable/cert-manager/templates/webhook-deployment.yaml
+@@ -21,7 +21,6 @@ spec:
+       app: {{ include "webhook.name" . }}
+       app.kubernetes.io/name: {{ include "webhook.name" . }}
+       app.kubernetes.io/instance: {{ .Release.Name }}
+-      app.kubernetes.io/managed-by: {{ .Release.Service }}
+   {{- with .Values.webhook.strategy }}
+   strategy:
+     {{- . | toYaml | nindent 4 }}
+diff --git a/stable/cert-manager/templates/webhook-service.yaml b/stable/cert-manager/templates/webhook-service.yaml
+index ea065c5..5c07a52 100644
+--- a/stable/cert-manager/templates/webhook-service.yaml
++++ b/stable/cert-manager/templates/webhook-service.yaml
+@@ -20,5 +20,4 @@ spec:
+     app: {{ include "webhook.name" . }}
+     app.kubernetes.io/name: {{ include "webhook.name" . }}
+     app.kubernetes.io/instance: {{ .Release.Name }}
+-    app.kubernetes.io/managed-by: {{ .Release.Service }}
+ {{- end -}}
