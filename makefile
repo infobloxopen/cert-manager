@@ -1,5 +1,5 @@
 VERSION ?= $(shell git describe --tags)
-APP_VERSION ?= $(shell git describe --abbrev=0)
+APP_VERSION ?= $(shell git describe --tags --abbrev=0)
 
 sync: submodule-update
 	cd upstream/cert-manager &&	git checkout ${VERSION}
