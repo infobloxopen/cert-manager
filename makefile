@@ -1,4 +1,5 @@
 VERSION ?= $(shell git describe --tags)
+APP_VERSION ?= $(shell git describe --tags --abbrev=0)
 
 sync: submodule-update
 	cd upstream/cert-manager &&	git checkout ${VERSION}
@@ -29,7 +30,7 @@ ${HOME}/.helm/repository/local:
 helm-init: ${HOME}/.helm/repository/local
 
 package: helm-init
-	helm package stable/cert-manager --version ${VERSION} --app-version ${VERSION}
+	helm package stable/cert-manager --version ${VERSION} --app-version ${APP_VERSION}
 	mv -v cert-manager-${VERSION}.tgz docs
 
 repo-index:
