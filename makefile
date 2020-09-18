@@ -2,7 +2,7 @@ VERSION ?= $(shell git describe --tags)
 APP_VERSION ?= $(shell git describe --tags --abbrev=0)
 
 sync: submodule-update
-	cd upstream/cert-manager &&	git checkout ${VERSION}
+	cd upstream/cert-manager &&	git checkout ${APP_VERSION}
 	cp -vr upstream/cert-manager/deploy/charts/cert-manager/ stable/cert-manager/
 
 submodule-update:
@@ -39,10 +39,12 @@ git-config:
 		git config user.name "Github Actions"; \
 	fi
 
-update-index: git-config package repo-index
-	if ! git tag --contains ${VERSION} ; then\
+release: git-config package repo-index
+
+update-index: git-config
+	if ! git tag --contains ${APP_VERSION} ; then\
 		git add .; \
-		git commit -m "updated index for ${VERSION} fixes #${TICKET}"; \
-		git tag -a ${VERSION} -m "${VERSION} release"; \
+		git commit -m "updated index for ${APP_VERSION} fixes #${TICKET}"; \
+		git tag -a ${APP_VERSION} -m "${APP_VERSION} release"; \
 		git push origin master --tags; \
 	fi

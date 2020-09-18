@@ -38,10 +38,9 @@ jobs:
 
     - name: Checkout code
       uses: actions/checkout@v2
-      with:
-        path: src/github.com/${{ github.repository }}
-        # fetch-depth: 100 # support git describe --always
-
+    - name: Fetch tags
+      run: git fetch --prune --unshallow
+      working-directory: ${{ github.workspace }}/src/github.com/${{ github.repository }}
     - name: Create release
       working-directory: ${{ github.workspace }}/src/github.com/${{ github.repository }}
       env:
@@ -53,5 +52,8 @@ jobs:
         VERSION=$(echo "$GITHUB_CONTEXT" | jq '.event.issue.title')
         TICKET=$(echo "$GITHUB_CONTEXT" | jq '.event.issue.number')
         echo Version: $VERSION
-        make VERSION=${VERSION} SHELL='bash -x' sync
-        make TICKET=${TICKET} VERSION=${VERSION} SHELL='bash -x' update-index
+        make APP_VERSION=${VERSION} SHELL='bash -x' sync
+        # Create tag locally
+        make TICKET=${TICKET} APP_VERSION=${VERSION} SHELL='bash -x' update-index
+        # Build chart from this new tag and update index
+        make release
