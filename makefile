@@ -24,12 +24,7 @@ patch: $(PATCHES)
 	git apply $@
 	touch $@
 
-${HOME}/.helm/repository/local:
-	helm init -c
-
-helm-init: ${HOME}/.helm/repository/local
-
-package: helm-init
+package:
 	helm package stable/cert-manager --version ${VERSION} --app-version ${APP_VERSION}
 	mv -v cert-manager-${VERSION}.tgz docs
 
