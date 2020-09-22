@@ -1,8 +1,8 @@
-VERSION ?= $(shell git describe --tags)
 APP_VERSION ?= $(shell git describe --tags --abbrev=0)
 
 sync: submodule-update
 	cd upstream/cert-manager &&	git checkout ${APP_VERSION}
+	mkdir -p stable/cert-manager
 	cp -vr upstream/cert-manager/deploy/charts/cert-manager/ stable/cert-manager/
 
 submodule-update:
@@ -25,8 +25,9 @@ patch: $(PATCHES)
 	touch $@
 
 package:
-	helm package stable/cert-manager --version ${VERSION} --app-version ${APP_VERSION}
-	mv -v cert-manager-${VERSION}.tgz docs
+	helm package stable/cert-manager --version ${APP_VERSION} --app-version ${APP_VERSION}
+	rm -rf stable/
+	mv -v cert-manager-${APP_VERSION}.tgz docs
 
 repo-index:
 	helm repo index docs --url https://infobloxopen.github.io/cert-manager/
@@ -42,7 +43,7 @@ git-config:
 release: git-config package repo-index
 
 update-index: git-config
-	if ! git tag --contains ${APP_VERSION} ; then\
+	if ! git rev-parse ${APP_VERSION} >/dev/null 2>&1 ; then\
 		git add .; \
 		git commit -m "updated index for ${APP_VERSION} fixes #${TICKET}"; \
 		git tag -a ${APP_VERSION} -m "${APP_VERSION} release"; \

@@ -54,8 +54,7 @@ jobs:
         VERSION=$(echo "$GITHUB_CONTEXT" | jq '.event.issue.title')
         TICKET=$(echo "$GITHUB_CONTEXT" | jq '.event.issue.number')
         echo Version: $VERSION
+        # Sync submodule
         make APP_VERSION=${VERSION} SHELL='bash -x' sync
-        # Create tag locally
-        make TICKET=${TICKET} APP_VERSION=${VERSION} SHELL='bash -x' update-index
         # Build chart from this new tag and update index
-        make release
+        make TICKET=${TICKET} APP_VERSION=${VERSION} SHELL='bash -x' release update-index
