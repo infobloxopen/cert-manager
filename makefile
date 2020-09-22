@@ -2,7 +2,7 @@ APP_VERSION ?= $(shell git describe --tags --abbrev=0)
 
 sync: submodule-update
 	cd upstream/cert-manager &&	git checkout ${APP_VERSION}
-	mkdir -p stable/cert-manager
+	mkdir -p stable
 	cp -vr upstream/cert-manager/deploy/charts/cert-manager/ stable/cert-manager/
 
 submodule-update:
