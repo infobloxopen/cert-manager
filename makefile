@@ -1,9 +1,9 @@
-APP_VERSION ?= $(shell git describe --tags --abbrev=0)
-
 sync: submodule-update
-	cd upstream/cert-manager &&	git checkout ${APP_VERSION}
+	cd upstream/cert-manager &&	git fetch && git reset --hard ${APP_VERSION}
+	rm -rf stable/*
 	mkdir -p stable
-	cp -vr upstream/cert-manager/deploy/charts/cert-manager/ stable/cert-manager/
+	cp -vr upstream/cert-manager/deploy/charts/cert-manager/ stable/
+	cp -vr upstream/cert-manager/deploy/crds stable/cert-manager
 
 submodule-update:
 	git submodule update --init --remote upstream/cert-manager
